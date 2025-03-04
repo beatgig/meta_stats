@@ -1,2 +1,9 @@
-# meta_stats
-A Rust library with Python bindings for Meta stats
+# Meta Stats
+
+A Rust library with Python bindings for Meta Stats
+
+## Installation
+
+```bash
+pip install meta_stats
+```
