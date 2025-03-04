@@ -5,4 +5,8 @@ def test_meta_stats():
     assert meta_stats.add(2, 2) == 4
     assert meta_stats.add(1, -1) == 0
     print("all done!")
+    meta_client_id = meta_stats.get_meta_client_id()
+    meta_client_secret = meta_stats.get_meta_client_secret()
+    assert meta_client_id
+    assert meta_client_secret
     
