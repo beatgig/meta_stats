@@ -45,6 +45,3 @@ def test_meta_stats():
     print(type(page_posts_with_summary_dict))
     print(page_posts_with_summary_dict["data"])
     print(type(page_posts_with_summary_dict["data"]))
-
-    
-    assert False
