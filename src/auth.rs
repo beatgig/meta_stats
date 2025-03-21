@@ -63,11 +63,15 @@ pub fn get_meta_access_token(endpoint_url: Option<String>, client_id: Option<Str
         None => get_meta_version()?,
     };
 
-    let meta_version = format!("v{}", meta_version);
+    let formatted_version = if meta_version.starts_with("v") {
+        meta_version
+    } else {
+        format!("v{}", meta_version)
+    };
 
     let endpoint_url = match endpoint_url {
         Some(endpoint_url) => endpoint_url,
-        None => format!("https://graph.facebook.com/{}/oauth/access_token", meta_version),
+        None => format!("https://graph.facebook.com/{}/oauth/access_token", formatted_version),
     };
 
     let url = format!(

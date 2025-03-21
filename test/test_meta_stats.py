@@ -13,6 +13,10 @@ def test_meta_stats():
     print(meta_access_token)
     assert meta_access_token
 
+    meta_access_token = meta_stats.auth.get_meta_access_token("https://graph.facebook.com/oauth/access_token", meta_client_id, meta_client_secret, "client_credentials", "22.0")
+    print(meta_access_token)
+    assert meta_access_token
+
     page_info = meta_stats.facebook.get_facebook_page_info(meta_access_token, "ChachiOfficial", "v22.0")
     print(page_info)
     print(type(page_info))
