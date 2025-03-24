@@ -33,15 +33,11 @@ def test_meta_stats():
     page_posts = meta_stats.facebook.get_facebook_page_posts(meta_access_token, "ChachiOfficial", "v22.0")
     print(page_posts)
     print(type(page_posts))
-
-
     
     page_posts_with_summary = meta_stats.facebook.get_facebook_page_posts_with_summary(meta_access_token, "ChachiOfficial", "v22.0")
     print(page_posts_with_summary)
     print(type(page_posts_with_summary))
 
-    page_posts_with_summary_dict = json.loads(page_posts_with_summary)
-    print(page_posts_with_summary_dict)
-    print(type(page_posts_with_summary_dict))
-    print(page_posts_with_summary_dict["data"])
-    print(type(page_posts_with_summary_dict["data"]))
+    instagram_page_info = meta_stats.instagram.get_instagram_page_info("chachiofficial")
+    print(instagram_page_info)
+    print(type(instagram_page_info))
