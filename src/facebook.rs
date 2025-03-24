@@ -156,11 +156,8 @@ pub fn get_facebook_page_info(access_token: Option<String>, page_id: Option<Stri
         Some(page_id) => {
 
             let url = format!("https://graph.facebook.com/{}/{}?access_token={}", meta_version, page_id, access_token);
-            println!("URL: {}", url);
-
             let res = client.get(&url).send().map_err(|e| PyValueError::new_err(e.to_string()))?;
             let raw_text = res.text().map_err(|e| PyValueError::new_err(e.to_string()))?;
-            println!("Raw facebook page info text: {}", raw_text);
             let page_info: BasicPageInfo = serde_json::from_str(&raw_text)
                 .map_err(|e| PyValueError::new_err(format!("Failed to parse JSON response: {}", e)))?;
             
@@ -193,11 +190,8 @@ pub fn get_facebook_page_followers(access_token: Option<String>, page_id: Option
         Some(page_id) => {
 
             let url = format!("https://graph.facebook.com/{}/{}?fields=category,category_list,followers_count,fan_count,new_like_count,overall_star_rating,rating_count,talking_about_count&access_token={}", meta_version, page_id, access_token);
-            println!("URL: {}", url);
-
             let res = client.get(&url).send().map_err(|e| PyValueError::new_err(e.to_string()))?;
             let raw_text = res.text().map_err(|e| PyValueError::new_err(e.to_string()))?;
-            println!("Raw follower count text: {}", raw_text);
             let page_engagement: PageEngagement = serde_json::from_str(&raw_text)
                 .map_err(|e| PyValueError::new_err(format!("Failed to parse JSON response: {}", e)))?;
             
@@ -229,11 +223,8 @@ pub fn get_facebook_page_posts(access_token: Option<String>, page_id: Option<Str
         Some(page_id) => {
 
             let url = format!("https://graph.facebook.com/{}/{}/posts?&access_token={}", meta_version, page_id, access_token);
-            println!("URL: {}", url);
-
             let res = client.get(&url).send().map_err(|e| PyValueError::new_err(e.to_string()))?;
             let raw_text = res.text().map_err(|e| PyValueError::new_err(e.to_string()))?;
-            println!("Raw post text: {}", raw_text);
 
             let page_posts: BasicPostsInfo = serde_json::from_str(&raw_text)
                 .map_err(|e| PyValueError::new_err(format!("Failed to parse JSON response: {}", e)))?;
@@ -266,11 +257,9 @@ pub fn get_facebook_page_posts_with_summary(access_token: Option<String>, page_i
         Some(page_id) => {
 
             let url = format!("https://graph.facebook.com/{}/{}/posts?fields=id,message,created_time,likes.summary(true),comments.summary(true)&access_token={}", meta_version, page_id, access_token);
-            println!("URL: {}", url);
 
             let res = client.get(&url).send().map_err(|e| PyValueError::new_err(e.to_string()))?;
             let raw_text = res.text().map_err(|e| PyValueError::new_err(e.to_string()))?;
-            println!("Raw post text: {}", raw_text);
             let page_posts: BasicPostsInfo = serde_json::from_str(&raw_text)
             .map_err(|e| PyValueError::new_err(format!("Failed to parse JSON response: {}", e)))?;
         
@@ -290,7 +279,6 @@ pub fn get_facebook_next_results(next: String) -> PyResult<String> {
 
     let res = client.get(&next).send().map_err(|e| PyValueError::new_err(e.to_string()))?;
     let raw_text = res.text().map_err(|e| PyValueError::new_err(e.to_string()))?;
-    println!("Raw post text: {}", raw_text);
 
     Ok(raw_text)
 
@@ -323,10 +311,8 @@ pub fn get_facebook_post_interactions(access_token: Option<String>, post_id: Opt
     match post_id {
         Some(post_id) => {
             let url = format!("https://graph.facebook.com/{}/{}/reactions?access_token={}", meta_version, post_id, access_token);
-            println!("URL: {}", url);
             let res = client.get(&url).send().map_err(|e| PyValueError::new_err(e.to_string()))?;
             let raw_text = res.text().map_err(|e| PyValueError::new_err(e.to_string()))?;
-            println!("Raw post reactions text: {}", raw_text);
 
             Ok(raw_text)
         },

@@ -57,9 +57,6 @@ pub fn get_instagram_page_info(username: Option<String>) -> PyResult<Py<Instagra
     match username {
         Some(username) => {
             let url = format!("https://i.instagram.com/api/v1/users/web_profile_info/?username={}", username);
-
-            println!("URL: {}", url);
-
             let res = client.get(&url).header("User-Agent", "Instagram 76.0.0.15.395 Android (24/7.0; 640dpi; 1440x2560; samsung; SM-G930F; herolte; samsungexynos8890; en_US; 138226743)").send().map_err(|e| PyValueError::new_err(e.to_string()))?;
             let raw_text = res.text().map_err(|e| PyValueError::new_err(e.to_string()))?;
             let page_info: InstagramPageInfo = serde_json::from_str(&raw_text)
