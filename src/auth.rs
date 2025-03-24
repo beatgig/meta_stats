@@ -78,13 +78,11 @@ pub fn get_meta_access_token(endpoint_url: Option<String>, client_id: Option<Str
         "{}?client_id={}&client_secret={}&grant_type={}",
         endpoint_url, client_id, client_secret, grant_type
     );
-    println!("URL: {}", url);
 
     let client = Client::new();
     let res = client.get(&url).send().map_err(|e| PyValueError::new_err(e.to_string()))?;
 
     let raw_text = res.text().map_err(|e| PyValueError::new_err(e.to_string()))?;
-    println!("Raw text: {}", raw_text);
 
 
     let response: Result<AccessTokenResponse, serde_json::Error> = serde_json::from_str(&raw_text);
