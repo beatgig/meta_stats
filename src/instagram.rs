@@ -60,7 +60,7 @@ pub fn get_instagram_page_info(username: Option<String>) -> PyResult<Py<Instagra
             let res = client.get(&url).header("User-Agent", "Instagram 76.0.0.15.395 Android (24/7.0; 640dpi; 1440x2560; samsung; SM-G930F; herolte; samsungexynos8890; en_US; 138226743)").send().map_err(|e| PyValueError::new_err(e.to_string()))?;
             let raw_text = res.text().map_err(|e| PyValueError::new_err(e.to_string()))?;
             let page_info: InstagramPageInfo = serde_json::from_str(&raw_text)
-                .map_err(|e| PyValueError::new_err(format!("Failed to parse JSON response: {}", e)))?;
+                .map_err(|e| PyValueError::new_err(format!("Failed to parse response into InstagramPageInfo: {}", e)))?;
             
             Python::with_gil(|py| {
                 Py::new(py, page_info).map_err(|e| PyErr::from(e))
