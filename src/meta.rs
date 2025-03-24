@@ -14,7 +14,7 @@ pub struct Cursor {
 #[derive(Serialize, Deserialize, Clone)]
 pub struct Paging {
     #[pyo3(get)]
-    next: String,
+    next: Option<String>,
     #[pyo3(get)]
     cursors: Cursor
 }
