@@ -115,7 +115,7 @@ pub struct PostInfo {
     #[pyo3(get)]
     id: String,
     #[pyo3(get)]
-    message: String,
+    message: Option<String>,
     #[pyo3(get)]
     created_time: String,
     #[pyo3(get)]
