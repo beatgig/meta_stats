@@ -159,7 +159,7 @@ pub fn get_facebook_page_info(access_token: Option<String>, page_id: Option<Stri
             let res = client.get(&url).send().map_err(|e| PyValueError::new_err(e.to_string()))?;
             let raw_text = res.text().map_err(|e| PyValueError::new_err(e.to_string()))?;
             let page_info: BasicPageInfo = serde_json::from_str(&raw_text)
-                .map_err(|e| PyValueError::new_err(format!("Failed to parse JSON response: {}", e)))?;
+                .map_err(|e| PyValueError::new_err(format!("Failed to parse response into BasicPageInfo: {}", e)))?;
             
             Python::with_gil(|py| {
                 Py::new(py, page_info).map_err(|e| PyErr::from(e))
@@ -193,7 +193,7 @@ pub fn get_facebook_page_followers(access_token: Option<String>, page_id: Option
             let res = client.get(&url).send().map_err(|e| PyValueError::new_err(e.to_string()))?;
             let raw_text = res.text().map_err(|e| PyValueError::new_err(e.to_string()))?;
             let page_engagement: PageEngagement = serde_json::from_str(&raw_text)
-                .map_err(|e| PyValueError::new_err(format!("Failed to parse JSON response: {}", e)))?;
+                .map_err(|e| PyValueError::new_err(format!("Failed to parse response into PageEngagement: {}", e)))?;
             
             Python::with_gil(|py| {
                 Py::new(py, page_engagement).map_err(|e| PyErr::from(e))
@@ -227,7 +227,7 @@ pub fn get_facebook_page_posts(access_token: Option<String>, page_id: Option<Str
             let raw_text = res.text().map_err(|e| PyValueError::new_err(e.to_string()))?;
 
             let page_posts: BasicPostsInfo = serde_json::from_str(&raw_text)
-                .map_err(|e| PyValueError::new_err(format!("Failed to parse JSON response: {}", e)))?;
+                .map_err(|e| PyValueError::new_err(format!("Failed to parse response into BasicPostsInfo: {}", e)))?;
             
             Python::with_gil(|py| {
                 Py::new(py, page_posts).map_err(|e| PyErr::from(e))
@@ -261,7 +261,7 @@ pub fn get_facebook_page_posts_with_summary(access_token: Option<String>, page_i
             let res = client.get(&url).send().map_err(|e| PyValueError::new_err(e.to_string()))?;
             let raw_text = res.text().map_err(|e| PyValueError::new_err(e.to_string()))?;
             let page_posts: BasicPostsInfo = serde_json::from_str(&raw_text)
-            .map_err(|e| PyValueError::new_err(format!("Failed to parse JSON response: {}", e)))?;
+            .map_err(|e| PyValueError::new_err(format!("Failed to parse response into BasicPostsInfo: {}", e)))?;
         
             Python::with_gil(|py| {
                 Py::new(py, page_posts).map_err(|e| PyErr::from(e))
@@ -287,7 +287,7 @@ pub fn get_facebook_next_results(next: String) -> PyResult<String> {
 #[pyfunction]
 pub fn parse_next_results_to_basic_posts_info(raw_text: String) -> PyResult<Py<BasicPostsInfo>> {
     let page_posts: BasicPostsInfo = serde_json::from_str(&raw_text)
-    .map_err(|e| PyValueError::new_err(format!("Failed to parse JSON response: {}", e)))?;
+    .map_err(|e| PyValueError::new_err(format!("Failed to parse response into BasicPostsInfo: {}", e)))?;
         
     Python::with_gil(|py| {
         Py::new(py, page_posts).map_err(|e| PyErr::from(e))
