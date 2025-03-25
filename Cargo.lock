@@ -573,7 +573,7 @@ dependencies = [
 
 [[package]]
 name = "meta_stats"
-version = "0.1.5"
+version = "0.1.6"
 dependencies = [
  "dotenv",
  "pyo3",
