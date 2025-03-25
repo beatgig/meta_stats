@@ -59,7 +59,7 @@ pub struct PageEngagement {
 
 
 #[pyclass]
-#[derive(Serialize, Deserialize, Clone, Default)]
+#[derive(Serialize, Deserialize, Clone)]
 pub struct CommentInfo {
     #[pyo3(get)]
     message: Option<String>,
@@ -68,7 +68,7 @@ pub struct CommentInfo {
 }
 
 #[pyclass]
-#[derive(Serialize, Deserialize, Clone, Default)]
+#[derive(Serialize, Deserialize, Clone)]
 pub struct LikeInfo {
     #[pyo3(get)]
     id: Option<String>,
