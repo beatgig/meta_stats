@@ -148,9 +148,7 @@ pub fn get_instagram_page_info(username: Option<String>) -> PyResult<Py<Instagra
             let status = res.status();
             let raw_text = res.text()
                 .map_err(|e| PyValueError::new_err(format!("Failed to get response text: {}", e)))?;
-
-            println!("Raw text: {}", raw_text);
-            
+ 
             if raw_text.contains("\"status\":\"ok\"") {
                 match serde_json::from_str::<InstagramPageInfo>(&raw_text) {
                     Ok(page_info) => {
