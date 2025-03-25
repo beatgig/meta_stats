@@ -21,7 +21,7 @@ def test_meta_stats():
     print(meta_access_token)
     assert meta_access_token
 
-    page_info = meta_stats.facebook.get_facebook_page_info(meta_access_token, "ChachiOfficial", "v22.0")
+    page_info = meta_stats.facebook.get_facebook_page_info(meta_access_token, "imdjencore", "v22.0")
     print(page_info)
     print(type(page_info))
 
