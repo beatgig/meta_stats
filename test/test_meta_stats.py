@@ -38,6 +38,6 @@ def test_meta_stats():
     print(page_posts_with_summary)
     print(type(page_posts_with_summary))
 
-    instagram_page_info = meta_stats.instagram.get_instagram_page_info("chachiofficial")
+    instagram_page_info = meta_stats.instagram.get_instagram_page_info("hotelgaruda")
     print(instagram_page_info)
     print(type(instagram_page_info))
