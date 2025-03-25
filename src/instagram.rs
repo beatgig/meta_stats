@@ -126,39 +126,6 @@ impl InstagramPageInfoResult {
 }
 
 
-//#[pymethods]
-//impl InstagramPageInfoResult {
-    //#[getter]
-    //fn is_success(&self) -> bool {
-        //matches!(self, InstagramPageInfoResult::Success(_))
-    //}
-    
-    //#[getter]
-    //fn is_error(&self) -> bool {
-        //matches!(self, InstagramPageInfoResult::Error(_))
-    //}
-    
-    //#[getter]
-    //fn page_info(&self) -> Option<Py<InstagramPageInfo>> {
-        //Python::with_gil(|py| {
-            //match self {
-                //InstagramPageInfoResult::Success(info) => Some(Py::new(py, info.clone()).unwrap()),
-                //InstagramPageInfoResult::Error(_) => None,
-            //}
-        //})
-    //}
-    
-    //#[getter]
-    //fn error(&self) -> Option<Py<meta::MetaError>> {
-        //Python::with_gil(|py| {
-            //match self {
-                //InstagramPageInfoResult::Success(_) => None,
-                //InstagramPageInfoResult::Error(err) => Some(Py::new(py, err.clone()).unwrap()),
-            //}
-        //})
-    //}
-//}
-
 const USER_AGENT: &str = "Instagram 241.1.0.18.114 Android (31/12; 420dpi; 1080x2148; samsung; SM-G998B; o1s; exynos2100; en_US; 378436363)";
 
 
