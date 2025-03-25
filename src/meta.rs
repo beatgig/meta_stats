@@ -18,3 +18,26 @@ pub struct Paging {
     #[pyo3(get)]
     cursors: Cursor
 }
+
+#[pyclass]
+#[derive(Serialize, Deserialize, Clone)]
+pub struct MetaErrorData {
+    #[pyo3(get)]
+    message: String,
+    #[pyo3(get)]
+    r#type: String,
+    #[pyo3(get)]
+    code: i32,
+    #[pyo3(get)]
+    fbtrace_id: String,
+    #[pyo3(get)]
+    is_transient: bool,
+}
+    
+
+#[pyclass]
+#[derive(Serialize, Deserialize, Clone)]
+pub struct MetaError {
+    #[pyo3(get)]
+    error: MetaErrorData,
+}
