@@ -66,7 +66,7 @@ pub struct InstagramPageInfo {
 pub struct InstagramPageInfoResult {
     is_success: bool,
     page_info: Option<InstagramPageInfo>,
-    error: Option<meta::MetaError>,
+    error: Option<meta::MetaInstagramError>,
 }
 
 
@@ -82,7 +82,7 @@ impl InstagramPageInfoResult {
     }
 
     #[staticmethod]
-    fn error(err: meta::MetaError) -> Self {
+    fn error(err: meta::MetaInstagramError) -> Self {
         InstagramPageInfoResult {
             is_success: false,
             page_info: None,
@@ -109,7 +109,7 @@ impl InstagramPageInfoResult {
     }
     
     #[getter]
-    fn get_error(&self) -> Option<Py<meta::MetaError>> {
+    fn get_error(&self) -> Option<Py<meta::MetaInstagramError>> {
         match &self.error {
             Some(err) => Python::with_gil(|py| Some(Py::new(py, err.clone()).unwrap())),
             None => None,
@@ -165,7 +165,7 @@ pub fn get_instagram_page_info(username: Option<String>) -> PyResult<Py<Instagra
                 }
             }
             
-            match serde_json::from_str::<meta::MetaError>(&raw_text) {
+            match serde_json::from_str::<meta::MetaInstagramError>(&raw_text) {
                 Ok(error) => {
                     let result = InstagramPageInfoResult::error(error);
                     return Python::with_gil(|py| {
