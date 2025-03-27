@@ -208,7 +208,7 @@ impl BasicPageInfoResult {
     }
 
     #[getter]
-    fn get_error(&self) -> Option<Py<meta::MetaError>> {
+    fn error_info(&self) -> Option<Py<meta::MetaError>> {
         match &self.error {
             Some(err) => Python::with_gil(|py| Some(Py::new(py, err.clone()).unwrap())),
             None => None,
@@ -272,7 +272,7 @@ impl PageEngagementResult {
     }
 
     #[getter]
-    fn get_error(&self) -> Option<Py<meta::MetaError>> {
+    fn error_info(&self) -> Option<Py<meta::MetaError>> {
         match &self.error {
             Some(err) => Python::with_gil(|py| Some(Py::new(py, err.clone()).unwrap())),
             None => None,
@@ -336,7 +336,7 @@ impl BasicPostsInfoResult {
     }
 
     #[getter]
-    fn get_error(&self) -> Option<Py<meta::MetaError>> {
+    fn error_info(&self) -> Option<Py<meta::MetaError>> {
         match &self.error {
             Some(err) => Python::with_gil(|py| Some(Py::new(py, err.clone()).unwrap())),
             None => None,

@@ -109,7 +109,7 @@ impl InstagramPageInfoResult {
     }
     
     #[getter]
-    fn get_error(&self) -> Option<Py<meta::MetaInstagramError>> {
+    fn error_info(&self) -> Option<Py<meta::MetaInstagramError>> {
         match &self.error {
             Some(err) => Python::with_gil(|py| Some(Py::new(py, err.clone()).unwrap())),
             None => None,
