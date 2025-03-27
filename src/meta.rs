@@ -41,3 +41,17 @@ pub struct MetaError {
     #[pyo3(get)]
     error: MetaErrorData,
 }
+
+
+#[pyclass]
+#[derive(Serialize, Deserialize, Clone)]
+pub struct MetaInstagramError {
+    #[pyo3(get)]
+    message: String,
+    #[pyo3(get)]
+    require_login: bool,
+    #[pyo3(get)]
+    igweb_rollout: bool,
+    #[pyo3(get)]
+    status: String,
+}
