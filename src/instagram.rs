@@ -2,6 +2,7 @@ use pyo3::prelude::*;
 use serde::{Deserialize, Serialize};
 use pyo3::exceptions::PyValueError;
 use reqwest::blocking::Client;
+use rand::seq::SliceRandom;
 use crate::meta;
 
 #[pyclass]
@@ -126,7 +127,27 @@ impl InstagramPageInfoResult {
 }
 
 
-const USER_AGENT: &str = "Instagram 241.1.0.18.114 Android (31/12; 420dpi; 1080x2148; samsung; SM-G998B; o1s; exynos2100; en_US; 378436363)";
+const USER_AGENTS: [&str; 11] = [
+    "Instagram 241.1.0.18.114 Android (31/12; 420dpi; 1080x2148; samsung; SM-G998B; o1s; exynos2100; en_US; 378436363)",
+    "Instagram 244.0.0.17.110 Android (30/11; 480dpi; 1080x2400; xiaomi; M2103K19PG; dandelion; qcom; en_US; 383877306)",
+    "Instagram 245.0.0.18.108 Android (28/9; 320dpi; 720x1382; OnePlus; ONEPLUS A3003; OnePlus3; qcom; en_US; 385416158)",
+    "Instagram 239.0.0.14.111 Android (29/10; 480dpi; 1080x2310; Xiaomi; Redmi Note 8 Pro; begonia; mt6785; en_US; 373310557)",
+    "Instagram 243.1.0.14.111 (iPhone13,4; iOS 16_5_1; en_US; en-US; scale=3.00; 1284x2778; 382468103)",
+    "Instagram 244.0.0.15.110 (iPhone14,3; iOS 17_1; en_US; en-US; scale=3.00; 1170x2532; 384888781)",
+    "Instagram 246.0.0.17.107 (iPhone12,1; iOS 15_7_9; en_US; en-US; scale=2.00; 828x1792; 387311294)",
+    "Instagram 242.0.0.12.109 (iPad13,1; iOS 16_6; en_US; en-US; scale=2.00; 1620x2160; 381295754)",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15",
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
+];
+
+const APP_IDS: [&str; 5] = [
+    "936619743392459",
+    "124024574287414",
+    "389801252",
+    "503323726800545",
+    "446889149701729",
+];
 
 
 #[pyfunction]
@@ -136,12 +157,22 @@ pub fn get_instagram_page_info(username: Option<String>) -> PyResult<Py<Instagra
         .build()
         .map_err(|e| PyValueError::new_err(format!("Failed to create HTTP client for instagram page info: {}", e)))?;
     
+    let user_agent = USER_AGENTS
+        .choose(&mut rand::thread_rng())
+        .unwrap_or(&USER_AGENTS[0]);
+
+    let app_id = APP_IDS.choose(&mut rand::thread_rng()).unwrap_or(&"936619743392459");
+
 
     match username {
         Some(username) => {
             let url = format!("https://i.instagram.com/api/v1/users/web_profile_info/?username={}", username);
             let res = client.get(&url)
-                .header("User-Agent", USER_AGENT)
+                .header("Accept-Language", "en-US")
+                .header("User-Agent", *user_agent)
+                .header("X-IG-App-ID", *app_id)
+                .header("X-IG-Capabilities", "3brTvw==")
+                .header("X-IG-Connection-Type", "WIFI")
                 .send()
                 .map_err(|e| PyValueError::new_err(format!("Request failed in instagram page info: {}", e)))?;
 
